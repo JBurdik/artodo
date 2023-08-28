@@ -1,8 +1,9 @@
+import { Carousel } from "@/components/carousel/Carousel";
 import { PageImageSection } from "@/components/PageImageSection";
 import { H1 } from "@/components/ui/H1";
 import { Button } from "@/components/ui/button";
 import { ShoppingBag } from "lucide-react";
-import Image from "next/image";
+import { CarouselItem } from "@/components/carousel/Card";
 
 export default function Home() {
   return (
@@ -15,7 +16,7 @@ export default function Home() {
           loop
           className="absolute inset-0"
         />
-        <div className="absolute text-white inset-36 z-40 flex flex-col items-start justify-start">
+        <div className="absolute text-white justify-center items-center inset-0 md:inset-36 z-40 flex flex-col md:items-start md:justify-start">
           <h1 className="text-5xl tracking-widest uppercase font-thin ">
             Gravírování
           </h1>
@@ -76,6 +77,32 @@ export default function Home() {
           </div>
         </PageImageSection>
       </section>
+      <Carousel title="Best Sellers">
+        <CarouselItem
+          title="Plastovy stojanek"
+          subtitle="Material: plast"
+          desc="
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, totam."
+        />
+        <CarouselItem
+          title="Drevena pozvanka"
+          subtitle="Material: drevo"
+          desc="
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, totam."
+        />
+        <CarouselItem
+          title="Rytina do prstenu"
+          subtitle="Material: Kov"
+          desc="
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, totam."
+        />
+        <CarouselItem
+          title="Přívěsek na klíče"
+          subtitle="Material: Kov"
+          desc="
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, totam."
+        />
+      </Carousel>
       <section className="container mt-12">
         <H1>O nás</H1>
         <PageImageSection title="" text="left" img="/">

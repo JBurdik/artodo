@@ -17,7 +17,7 @@ export const PageImageSection = (props: Props) => {
           props.text === "left" && "md:order-2"
         )}
       >
-        <h3 className="text-xl text-primary font-bold tracking-wider z-50 md:hidden">
+        <h3 className="text-xl text-white font-bold tracking-wider z-50 md:hidden">
           {props.title}
         </h3>
         <Image
