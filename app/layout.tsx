@@ -26,7 +26,8 @@ export default function RootLayout({
           {children}
           {/* footer */}
           <div className="mt-10 shadow-md shadow-foreground p-10 text-center">
-            © Artodo.cz {new Date().getFullYear()}
+            <p className="text-xl">© Artodo.cz {new Date().getFullYear()}</p>
+            <span className="text-sm text-gray-500">web by Jirka Burdych</span>
           </div>
         </ThemeProvider>
       </body>

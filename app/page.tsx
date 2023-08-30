@@ -92,7 +92,7 @@ export default function Home() {
         </p>
       </Section>
       <Section title="O nás" className="container mt-12">
-        <PageImageSection title="" text="left" img="/">
+        <PageImageSection title="" text="left" img="/img/hero2.png">
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt
             quasi accusantium quis, voluptas molestias, sed, illum iusto dolore

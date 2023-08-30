@@ -11,18 +11,26 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-export function ModeToggle() {
+interface Props {
+  className?: string;
+}
+export function ModeToggle(props: Props) {
   const { setTheme, theme } = useTheme();
 
   return (
     <>
       {theme === "light" ? (
-        <Button size={"icon"} variant={"icon"} onClick={() => setTheme("dark")}>
+        <Button
+          className={props.className}
+          size={"icon"}
+          variant={"icon"}
+          onClick={() => setTheme("dark")}
+        >
           <Moon />
         </Button>
       ) : (
         <Button
+          className={props.className}
           size={"icon"}
           variant={"icon"}
           onClick={() => setTheme("light")}

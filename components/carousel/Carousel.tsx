@@ -32,9 +32,9 @@ export const Carousel = (props: Props) => {
 
   return (
     <section>
-      <div className="relative">
+      <div className="relative flex flex-col">
         <H1>{props.title}</H1>
-        <div className="flex flex-row gap-2 justify-center items-center absolute bottom-0 right-2">
+        <div className="flex flex-row gap-2 justify-center items-center md:absolute md:bottom-0 md:right-2 mb-4">
           <MoveLeft onClick={scrollPrev} className="cursor-pointer" />
           <MoveRight onClick={scrollNext} className="cursor-pointer" />
         </div>
