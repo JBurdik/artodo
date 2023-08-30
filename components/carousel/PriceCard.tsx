@@ -12,16 +12,35 @@ interface Props {
   title: string;
   subtitle: string;
   desc: string;
+  price: number;
+  currency: "Kč" | "$" | "€";
+  img?: string;
   style?: Object;
 }
 
-export const CarouselItem = ({ title, subtitle, desc, style }: Props) => {
+export const PriceCard = ({
+  title,
+  subtitle,
+  desc,
+  style,
+  price,
+  currency,
+  img,
+}: Props) => {
   return (
     <Card style={style}>
       <CardHeader>
-        <img src="https://placehold.co/500" className="aspect-square" />
+        <img
+          src={img ?? "https://placehold.co/500"}
+          className="aspect-square"
+        />
         <CardTitle>{title}</CardTitle>
         <CardDescription>{subtitle}</CardDescription>
+        <div>
+          {currency !== "Kč" && currency}
+          {" " + price + " "}
+          {currency === "Kč" && currency}
+        </div>
       </CardHeader>
       <CardContent>
         <p>{desc}</p>

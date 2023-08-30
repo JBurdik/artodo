@@ -1,11 +1,12 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Caveat, Glass_Antiqua } from "next/font/google";
 import { ModeToggle } from "@/components/theme-toggle-button";
 import { Nav } from "@/components/shared/Nav";
 
-const inter = Inter({ subsets: ["latin"] });
+const caveat = Caveat({ subsets: ["latin-ext"] });
+const glass = Glass_Antiqua({ subsets: ["latin-ext"], weight: ["400"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={caveat.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Nav />
           {children}

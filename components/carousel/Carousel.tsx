@@ -4,6 +4,7 @@ import { H1 } from "../ui/H1";
 import useEmblaCarousel from "embla-carousel-react";
 import { VariantProps, cva } from "class-variance-authority";
 import { useCallback } from "react";
+import style from "./Carousel.module.css";
 import {
   ArrowLeft,
   ArrowLeftCircle,
@@ -12,23 +13,10 @@ import {
   MoveRight,
 } from "lucide-react";
 
-const style = {
-  embla: {
-    overflow: "hidden",
-  },
-  emblaContainer: {
-    display: "flex",
-  },
-  emblaSlide: {
-    flex: "0 0 50%",
-    padding: "0 .5rem",
-    minWidth: 0,
-  },
-};
-
 interface Props {
   title: string;
   children: React.ReactNode[];
+  slidesCount: number;
 }
 
 export const Carousel = (props: Props) => {
@@ -51,10 +39,14 @@ export const Carousel = (props: Props) => {
           <MoveRight onClick={scrollNext} className="cursor-pointer" />
         </div>
       </div>
-      <div style={style.embla} ref={ref}>
-        <div style={style.emblaContainer}>
+      <div className={style.embla} ref={ref}>
+        <div className={style.emblaContainer}>
           {props.children.map((child, idx) => (
-            <div key={idx} style={style.emblaSlide}>
+            <div
+              key={idx}
+              className={style.emblaSlide}
+              style={{ width: `${100 / props.slidesCount}%` }}
+            >
               {child}
             </div>
           ))}
