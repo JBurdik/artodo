@@ -5,7 +5,23 @@
   display: flex;
 }
 .emblaSlide {
-  flex: 0 0 auto;
+  flex: 0 0 100%;
   padding: 0 0.5rem;
   min-width: 0;
+}
+
+@media (min-width: 650px) {
+  .emblaSlide {
+    flex: 0 0 50%; /* Breakpoint SM slide covers 50% of the viewport */
+  }
+}
+@media (min-width: 750px) {
+  .emblaSlide {
+    flex: 0 0 33.3333%; /* Breakpoint SM slide covers 50% of the viewport */
+  }
+}
+@media (min-width: 900px) {
+  .emblaSlide {
+    flex: 0 0 25%; /* Breakpoint SM slide covers 50% of the viewport */
+  }
 }

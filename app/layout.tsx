@@ -24,6 +24,10 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Nav />
           {children}
+          {/* footer */}
+          <div className="mt-10 shadow-md shadow-foreground p-10 text-center">
+            © Artodo.cz {new Date().getFullYear()}
+          </div>
         </ThemeProvider>
       </body>
     </html>

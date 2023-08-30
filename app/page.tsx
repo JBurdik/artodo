@@ -6,18 +6,31 @@ import { ShoppingBag } from "lucide-react";
 import { CarouselItem } from "@/components/carousel/Card";
 import { PriceCard } from "@/components/carousel/PriceCard";
 import { Section } from "@/components/Section";
+import Image from "next/image";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function Home() {
   return (
     <main className="4xl:container flex-col flex h-full">
-      <Section fullWidth className="relative overflow-hidden h-96">
-        <video
-          src="/hero.mp4"
-          autoPlay
-          // controls
-          loop
-          className="absolute inset-0"
-        />
+      <Section fullWidth className="relative overflow-hidden h-[50vh]">
+        <div className="absolute inset-0">
+          <Image
+            src={"/img/hero1.png"}
+            alt="hero image"
+            fill
+            className="object-cover"
+          />
+        </div>
+        <div className="tint absolute inset-0 z-30" />
+        <div className="absolute z-30 fill-white right-10 bottom-10 opacity-80">
+          <Image src={"/logo_white.svg"} width={400} height={200} alt="logo" />
+        </div>
         <div className="absolute text-white justify-center items-center inset-0 md:inset-36 z-40 flex flex-col md:items-start md:justify-start">
           <h1 className="text-5xl tracking-widest uppercase font-thin ">
             Gravírování
@@ -37,7 +50,7 @@ export default function Home() {
           <PriceCard
             title="Přívěšek na klíče"
             subtitle="Material: Titan"
-            img="/catKeychain.png"
+            img="/img/catKeychain.png"
             desc="
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, totam."
             price={540}
@@ -46,7 +59,7 @@ export default function Home() {
           <PriceCard
             title="Náramek na ruku"
             subtitle="Material: Stříbro"
-            img="/cat_bracelet.png"
+            img="/img/cat_bracelet.png"
             desc="
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, totam."
             price={540}
@@ -55,7 +68,7 @@ export default function Home() {
           <PriceCard
             title="Řetízek na krk"
             subtitle="Material: Chirurgická ocel"
-            img="/necklaceDogSilver.png"
+            img="/img/necklaceDogSilver.png"
             desc="
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, totam."
             price={890}
@@ -64,7 +77,7 @@ export default function Home() {
           <PriceCard
             title="Přívěsek na klíče"
             subtitle="Material: Zlato"
-            img="/dogKeychain.png"
+            img="/img/dogKeychain.png"
             desc="
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, totam."
             price={1040}
@@ -87,6 +100,54 @@ export default function Home() {
             explicabo consequuntur perspiciatis id aperiam.
           </p>
         </PageImageSection>
+      </Section>
+      <Section>
+        <Carousel title="Reference">
+          <Card>
+            <CardHeader>
+              <CardTitle>Honza</CardTitle>
+              <CardDescription>Milovník psů</CardDescription>
+            </CardHeader>
+            <CardContent>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Laboriosam, fugiat animi at ab alias culpa facilis atque provident
+              repellendus reiciendis.
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Klára</CardTitle>
+              <CardDescription>Milovnice květin</CardDescription>
+            </CardHeader>
+            <CardContent>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Laboriosam, fugiat animi at ab alias culpa facilis atque provident
+              repellendus reiciendis.
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Robert</CardTitle>
+              <CardDescription>Milovník aut</CardDescription>
+            </CardHeader>
+            <CardContent>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Laboriosam, fugiat animi at ab alias culpa facilis atque provident
+              repellendus reiciendis.
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Lenka</CardTitle>
+              <CardDescription>Obdivovatelka Motýlů</CardDescription>
+            </CardHeader>
+            <CardContent>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Laboriosam, fugiat animi at ab alias culpa facilis atque provident
+              repellendus reiciendis.
+            </CardContent>
+          </Card>
+        </Carousel>
       </Section>
     </main>
   );

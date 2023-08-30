@@ -16,7 +16,7 @@ import {
 interface Props {
   title: string;
   children: React.ReactNode[];
-  slidesCount: number;
+  slidesCount?: number;
 }
 
 export const Carousel = (props: Props) => {
@@ -45,7 +45,7 @@ export const Carousel = (props: Props) => {
             <div
               key={idx}
               className={style.emblaSlide}
-              style={{ width: `${100 / props.slidesCount}%` }}
+              style={{ width: `${100 / (props.slidesCount ?? 1)}%` }}
             >
               {child}
             </div>
