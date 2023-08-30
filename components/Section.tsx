@@ -11,7 +11,11 @@ interface Props {
 export const Section = (props: Props) => {
   return (
     <section
-      className={cn(props.fullWidth ? "w-full" : "container", props.className)}
+      className={cn(
+        props.fullWidth ? "w-full" : "container",
+        props.className,
+        "mb-4"
+      )}
     >
       {props.title && <H1>{props.title}</H1>}
       {props.children}

@@ -1,7 +1,7 @@
 import { Carousel } from "@/components/carousel/Carousel";
 import { PageImageSection } from "@/components/PageImageSection";
 import { H1 } from "@/components/ui/H1";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { ShoppingBag } from "lucide-react";
 import { CarouselItem } from "@/components/carousel/Card";
 import { PriceCard } from "@/components/carousel/PriceCard";
@@ -14,6 +14,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 export default function Home() {
   return (
@@ -36,13 +38,16 @@ export default function Home() {
             Gravírování
           </h1>
           <h2>dárkových předmětů z fotografií</h2>
-          <Button
-            className="mt-8 uppercase tracking-widest font-light"
-            variant={"secondary"}
+          <Link
+            href={"/products"}
+            className={cn(
+              buttonVariants({ variant: "secondary" }),
+              "mt-8 -mb-1 tracking-widest flex flex-row items-center justify-center"
+            )}
           >
             <ShoppingBag className="mr-2" />
-            Produkty
-          </Button>
+            <span>Produkty</span>
+          </Link>
         </div>
       </Section>
       <Section className="container">

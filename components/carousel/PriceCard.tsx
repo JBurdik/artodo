@@ -34,7 +34,7 @@ export const PriceCard = ({
           src={img ?? "https://placehold.co/500"}
           className="aspect-square"
         />
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className="pt-4">{title}</CardTitle>
         <CardDescription>{subtitle}</CardDescription>
         <div>
           {currency !== "Kč" && currency}

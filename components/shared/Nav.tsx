@@ -33,7 +33,7 @@ export const Nav = () => {
             </Link>
           ))}
         </nav>
-        <div>
+        <div className="hidden md:block">
           <ModeToggle className="order-1" />
           <Link
             href={"/"}
@@ -42,6 +42,16 @@ export const Nav = () => {
             <ShoppingBag />
           </Link>
         </div>
+        <ModeToggle className="order-1 md:hidden" />
+        <Link
+          href={"/"}
+          className={cn(
+            buttonVariants({ variant: "icon" }),
+            "order-3 md:hidden"
+          )}
+        >
+          <ShoppingBag />
+        </Link>
       </div>
     </div>
   );
