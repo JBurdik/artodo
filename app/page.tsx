@@ -33,7 +33,7 @@ export default function Home() {
         </div>
       </Section>
       <Section className="container">
-        <Carousel title="Best Sellers" slidesCount={4}>
+        <Carousel title="Best Sellers" slidesCount={2}>
           <PriceCard
             title="Přívěšek na klíče"
             subtitle="Material: Titan"
