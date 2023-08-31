@@ -1,13 +1,13 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 import type { Metadata } from "next";
-import { Shantell_Sans, Solitreo } from "next/font/google";
+import { Montserrat, Shantell_Sans, Solitreo } from "next/font/google";
 import { ModeToggle } from "@/components/theme-toggle-button";
 import { Nav } from "@/components/shared/Nav";
 
-const caveat = Solitreo({
+const caveat = Montserrat({
   subsets: ["latin-ext"],
-  weight: ["400"],
+  weight: ["100", "200", "300", "400", "500", "600", "900"],
 });
 
 export const metadata: Metadata = {
