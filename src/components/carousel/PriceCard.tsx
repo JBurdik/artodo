@@ -1,3 +1,4 @@
+"use client";
 import {
   Card,
   CardContent,
@@ -7,6 +8,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "../ui/button";
+import { useSetRecoilState } from "recoil";
+import { cartState } from "@/atoms/cart";
 
 interface Props {
   title: string;
@@ -27,6 +30,7 @@ export const PriceCard = ({
   currency,
   img,
 }: Props) => {
+  const setShoppingCart = useSetRecoilState(cartState);
   return (
     <Card style={style}>
       <CardHeader>
@@ -46,7 +50,9 @@ export const PriceCard = ({
         <p>{desc}</p>
       </CardContent>
       <CardFooter>
-        <Button>Add to cart</Button>
+        <Button onClick={() => setShoppingCart((old) => [...old, title])}>
+          Add to cart
+        </Button>
       </CardFooter>
     </Card>
   );
