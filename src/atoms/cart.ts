@@ -1,11 +1,15 @@
+import { ShoppingCartItemType } from '@/models/shoppingCart';
 import {atom, selector} from 'recoil'
 
 export const cartState = atom({
     key: 'cartState', // unique ID (with respect to other atoms/selectors)
-    default: [] as string[], // default value (aka initial value)
+    default: [] as ShoppingCartItemType[], // default value (aka initial value)
     effects: [
       ({setSelf, onSet}) => {
-        const cart = localStorage.getItem('cartState')
+        let cart = null
+        if (typeof window !== 'undefined') {
+          cart = localStorage.getItem('cartState')
+        }
         if(cart === null) {
           setSelf([])
         } else {

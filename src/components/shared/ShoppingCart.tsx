@@ -3,6 +3,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { cartState } from "@/atoms/cart";
+import { ShoppingCartItem } from "../shoppingCart/ShoppingCartItem";
 
 interface Props {
   open: boolean;
@@ -20,14 +21,11 @@ export const ShoppingCartSideBar = ({ open, setOpen }: Props) => {
             <X />
           </Button>
         </div>
-        {shoppingCart.map((i, idx) => (
-          <p
-            key={`shopping_Cart_${idx}`}
-            onClick={() => setShoppingCart((old) => old.filter((o) => o !== i))}
-          >
-            {i}
-          </p>
-        ))}
+        <div className="flex flex-col gap-4">
+          {shoppingCart.map((i, idx) => (
+            <ShoppingCartItem key={`cartItem_${idx}`} {...i} />
+          ))}
+        </div>
       </div>
     );
   return <></>;

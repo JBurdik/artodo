@@ -67,15 +67,19 @@ export const Nav = () => {
             </Button>
           </div>
           <ModeToggle className="order-1 md:hidden" />
-          <Link
-            href={"/"}
-            className={cn(
-              buttonVariants({ variant: "icon" }),
-              "order-3 md:hidden"
-            )}
+          <Button
+            variant={"icon"}
+            className={"order-3 relative md:hidden"}
+            onClick={() => setShoppingCartOpen((prev) => !prev)}
           >
-            <ShoppingBasketIcon />
-          </Link>
+            <ShoppingCart />
+            <Badge
+              variant={"secondary"}
+              className="text-xs absolute right-0 top-0"
+            >
+              {cartItemsCount}
+            </Badge>
+          </Button>
         </div>
       </div>
     </>
