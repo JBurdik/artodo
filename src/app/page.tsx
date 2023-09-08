@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils";
 import { Metadata } from "next";
 import { ShoppingCartItemType } from "@/models/shoppingCart";
 import { Product } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 
 export const metadata: Metadata = {
   title: "Artodo.shop",
@@ -76,11 +77,12 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const result = await fetch(`${process.env.API_URL!}/products`, {
-    method: "GET",
-    cache: "no-cache",
-  });
-  const products: Product[] = await result.json();
+  // const result = await fetch(`${process.env.API_URL!}/products`, {
+  //   method: "GET",
+  //   cache: "no-cache",
+  // });
+  const products = await prisma.product.findMany();
+  // const products: Product[] = await result.json();
   return (
     <main className="4xl:container flex-col flex h-full">
       <Section fullWidth className="relative overflow-hidden h-[50vh]">
