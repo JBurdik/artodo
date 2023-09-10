@@ -9,7 +9,6 @@ export const updateQuantity = (
   setCartItems: SetterOrUpdater<ShoppingCartItemType[]>
 ) => {
   const cartItem = cartItems?.find((ci) => ci.id === id);
-  const cartItemIdx = cartItems.findIndex((ci) => ci.id === id);
   if (cartItem === undefined) return;
 
   let newQuantity = cartItem.quantity;
@@ -27,6 +26,7 @@ export const updateQuantity = (
       return;
     }
   }
+
   const updatedCart = cartItems.map((ci) => {
     return id === ci.id ? { ...ci, quantity: newQuantity } : ci;
   });

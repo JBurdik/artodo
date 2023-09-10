@@ -95,7 +95,7 @@ export default async function Home() {
           />
         </div>
         <div className="tint absolute inset-0 z-30" />
-        <div className="absolute z-30 fill-white right-10 bottom-10 opacity-80">
+        <div className="absolute z-30 fill-white right-10 bottom-10 opacity-80 hidden md:block">
           <Image src={"/logo_white.svg"} width={400} height={200} alt="logo" />
         </div>
         <div className="absolute text-white justify-center items-center inset-0 md:inset-36 z-40 flex flex-col md:items-start md:justify-start">
