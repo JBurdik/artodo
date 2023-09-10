@@ -1,0 +1,13 @@
+{
+  "hasSrc": true,
+  "packages": [
+    "prisma",
+    "next-auth",
+    "trpc"
+  ],
+  "preferredPackageManager": "yarn",
+  "rootPath": "src/",
+  "orm": "prisma",
+  "driver": "pg",
+  "auth": "next-auth"
+}

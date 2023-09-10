@@ -1,10 +1,8 @@
 import { Carousel } from "@/components/carousel/Carousel";
 import { PageImageSection } from "@/components/PageImageSection";
-import { H1 } from "@/components/ui/H1";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { ShoppingBag } from "lucide-react";
-import { CarouselItem } from "@/components/carousel/Card";
-import { PriceCard } from "@/components/carousel/PriceCard";
+import { PriceCard } from "@/components/products/PriceCard";
 import { Section } from "@/components/Section";
 import Image from "next/image";
 import {
@@ -17,8 +15,6 @@ import {
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Metadata } from "next";
-import { ShoppingCartItemType } from "@/models/shoppingCart";
-import { Product } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 
 export const metadata: Metadata = {
@@ -77,12 +73,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  // const result = await fetch(`${process.env.API_URL!}/products`, {
-  //   method: "GET",
-  //   cache: "no-cache",
-  // });
-  const products = await prisma.product.findMany();
-  // const products: Product[] = await result.json();
+  const products = await prisma.product.findMany({ where: { featured: true } });
   return (
     <main className="4xl:container flex-col flex h-full">
       <Section fullWidth className="relative overflow-hidden h-[50vh]">
@@ -118,53 +109,8 @@ export default async function Home() {
       <Section className="container">
         <Carousel title="Best Sellers" slidesCount={2}>
           {products.map((product) => (
-            <PriceCard
-              key={product.id}
-              title={product.name}
-              subtitle={"lorem ipsum"}
-              img={product.img}
-              desc={product.desc}
-              price={product.price}
-              stock={product.stock}
-              currency="Kč"
-            />
+            <PriceCard product={product} key={product.id} currency="Kč" />
           ))}
-          {/* <PriceCard
-            title="Přívěšek na klíče"
-            subtitle="Material: Titan"
-            img="/img/catKeychain.png"
-            desc="
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, totam."
-            price={540}
-            currency="Kč"
-          />
-          <PriceCard
-            title="Náramek na ruku"
-            subtitle="Material: Stříbro"
-            img="/img/cat_bracelet.png"
-            desc="
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, totam."
-            price={540}
-            currency="Kč"
-          />
-          <PriceCard
-            title="Řetízek na krk"
-            subtitle="Material: Chirurgická ocel"
-            img="/img/necklaceDogSilver.png"
-            desc="
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, totam."
-            price={890}
-            currency="Kč"
-          />
-          <PriceCard
-            title="Přívěsek na klíče"
-            subtitle="Material: Zlato"
-            img="/img/dogKeychain.png"
-            desc="
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi, totam."
-            price={1040}
-            currency="Kč"
-          /> */}
         </Carousel>
       </Section>
       <Section title="Vzpomínky">

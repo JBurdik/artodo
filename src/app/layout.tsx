@@ -1,11 +1,11 @@
 "use client";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
-import type { Metadata } from "next";
-import { Montserrat, Shantell_Sans, Solitreo } from "next/font/google";
-import { ModeToggle } from "@/components/theme-toggle-button";
+import { Montserrat } from "next/font/google";
 import { Nav } from "@/components/shared/Nav";
 import { RecoilRoot } from "recoil";
+import NextAuthProvider from "@/lib/auth/Provider";
+import TrpcProvider from "@/lib/trpc/Provider";
 
 const caveat = Montserrat({
   subsets: ["latin-ext"],
@@ -21,14 +21,10 @@ export default function RootLayout({
       <body className={caveat.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <RecoilRoot>
-            <Nav />
-            {children}
-          </RecoilRoot>
-          {/* footer */}
-          <div className="mt-10 shadow-md shadow-foreground p-10 text-center">
-            <p className="text-xl">© Artodo.cz {new Date().getFullYear()}</p>
-            <span className="text-sm text-gray-500">web by Jirka Burdych</span>
-          </div>
+<NextAuthProvider>
+<TrpcProvider>{children}</TrpcProvider>
+</NextAuthProvider>
+</RecoilRoot>
         </ThemeProvider>
       </body>
     </html>

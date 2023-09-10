@@ -15,7 +15,7 @@ export const ShoppingCartSideBar = ({ open, setOpen }: Props) => {
   const [totalPrice, setTotalPrice] = useState<number>(0);
   useEffect(() => {
     let total: number = 0;
-    shoppingCart.every((sc) => (total += sc.price));
+    shoppingCart.every((sc) => (total += sc.price * sc.quantity));
     setTotalPrice(total);
   }, [shoppingCart]);
   if (open)
@@ -34,7 +34,9 @@ export const ShoppingCartSideBar = ({ open, setOpen }: Props) => {
         </div>
         <div className="mt-auto p-6 flex flex-col">
           <span className="self-end py-3">Celkem: {totalPrice} Kč</span>
-          <Button variant={"secondary"}>Přejít k pokladně</Button>
+          <Button disabled={shoppingCart.length === 0} variant={"secondary"}>
+            Přejít k pokladně
+          </Button>
         </div>
       </div>
     );

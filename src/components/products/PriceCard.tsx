@@ -11,69 +11,42 @@ import { Button } from "../ui/button";
 import { useSetRecoilState } from "recoil";
 import { cartState } from "@/atoms/cart";
 import { ShoppingCartItemType } from "@/models/shoppingCart";
-import { nanoid } from "nanoid";
 import Image from "next/image";
+import { Product } from "@prisma/client";
+import addToCart from "@/functions/addToCart";
 
 interface Props {
-  title: string;
-  subtitle: string;
-  desc: string;
-  price: number;
+  product: Product;
   currency: "Kč" | "$" | "€";
-  img: string;
-  stock: number;
   style?: Object;
 }
 
-export const PriceCard = ({
-  title,
-  subtitle,
-  desc,
-  style,
-  price,
-  currency,
-  stock,
-  img,
-}: Props) => {
+export const PriceCard = ({ style, currency, product }: Props) => {
   const setShoppingCart = useSetRecoilState(cartState);
   return (
     <Card style={style}>
       <CardHeader>
         <Image
-          src={img === "" ? "https://placehold.co/500" : img}
-          alt={title}
+          src={product.img === "" ? "https://placehold.co/500" : product.img}
+          alt={product.name}
           width={500}
           height={500}
           className="aspect-square"
         />
-        <CardTitle className="pt-4">{title}</CardTitle>
-        <CardDescription>{subtitle}</CardDescription>
+        <CardTitle className="pt-4">{product.name}</CardTitle>
+        <CardDescription>{""}</CardDescription>
         <div>
           {currency !== "Kč" && currency}
-          {" " + price + " "}
+          {" " + product.price + " "}
           {currency === "Kč" && currency}
         </div>
       </CardHeader>
       <CardContent>
-        <p>{desc}</p>
+        <p>{product.desc}</p>
       </CardContent>
       <CardFooter>
-        <Button
-          onClick={() =>
-            setShoppingCart((old) => [
-              ...old,
-              {
-                id: nanoid(),
-                img: img,
-                name: title,
-                price,
-                quantity: 1,
-                stock: stock,
-              } as ShoppingCartItemType,
-            ])
-          }
-        >
-          Add to cart
+        <Button onClick={() => addToCart(setShoppingCart, product)}>
+          Přidat do košíku
         </Button>
       </CardFooter>
     </Card>

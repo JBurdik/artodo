@@ -1,8 +1,15 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
+}
+
+generator zod {
+  provider              = "zod-prisma"
+  output                = "./zod"
+  prismaJsonNullability = "true"
+  relationModel         = "true"
+  useDecimalJs          = "true"
+  modelSuffix           = "Schema"
+  modelCase             = "camelCase"
 }
 
 datasource db {
@@ -11,16 +18,17 @@ datasource db {
 }
 
 model Product {
-  id    String @id @default(uuid())
-  img   String
-  name  String
-  desc  String
-  price Int
-  stock Int
+  id       String  @id
+  img      String
+  name     String
+  desc     String
+  price    Int
+  stock    Int
+  featured Boolean @default(false)
 }
 
 model References {
-  id        String @id @default(uuid())
+  id        String @id
   fullName  String
   reference String
 }
