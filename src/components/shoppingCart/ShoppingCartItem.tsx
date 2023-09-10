@@ -39,7 +39,7 @@ export const ShoppingCartItem = ({ name, price, quantity, key, id }: Props) => {
             <div className="flex flex-row items-center justify-between w-fit gap-3">
               <Button
                 onClick={() =>
-                  updateQuantity("increase", thisItem, setCartItems)
+                  updateQuantity(id, "increase", cartItems, setCartItems)
                 }
                 variant={"icon"}
                 className="bg-secondary text-primary p-1 h-auto"
@@ -49,7 +49,7 @@ export const ShoppingCartItem = ({ name, price, quantity, key, id }: Props) => {
               {quantity}
               <Button
                 onClick={() =>
-                  updateQuantity("decrease", thisItem, setCartItems)
+                  updateQuantity(id, "decrease", cartItems, setCartItems)
                 }
                 variant={"icon"}
                 className="bg-secondary text-primary p-1 h-auto"
