@@ -20,7 +20,9 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="bg-white p-4 rounded-md mb-4 shadow-md shadow-foreground">
           {adminTitle}
         </div>
-        {children}
+        <div className="bg-secondary p-4 rounded-md shadow-md shadow-primary  max-h-max">
+          {children}
+        </div>
       </div>
     </>
   );

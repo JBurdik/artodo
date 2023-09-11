@@ -1,5 +1,8 @@
 "use client";
 import { adminTitleState } from "@/atoms/adminTitle";
+import { NewProductDialog } from "@/components/admin/products/dialogs/NewProductDialog";
+import { FsDialog } from "@/components/dialogs/FsDialog";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -9,7 +12,7 @@ import {
 } from "@/components/ui/table";
 import { trpc } from "@/lib/trpc/client";
 import { Product } from "@prisma/client";
-import { Edit2, Loader2, Save, X } from "lucide-react";
+import { Edit2, Loader2, Plus, Save, X } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -28,6 +31,10 @@ const EMPTY_FORM_DATA: Product = {
 const ProductsPage = () => {
   const setTitle = useSetRecoilState(adminTitleState);
   const utils = trpc.useContext();
+
+  const [newProductDialogOpen, setNewProductDialogOpen] =
+    useState<boolean>(false);
+
   const [formData, setFormData] = useState<Product>(EMPTY_FORM_DATA);
   const { data: products, isLoading } = trpc.products.getProducts.useQuery();
   const router = useRouter();
@@ -43,135 +50,147 @@ const ProductsPage = () => {
   }, [setTitle]);
 
   return (
-    <div>
-      ProductsPage
-      <Table>
-        {isLoading ? (
-          <TableRow>
-            <Loader2 className="animate-spin" />
-          </TableRow>
-        ) : (
-          <>
-            <TableHeader>
-              <TableRow>
-                <TableCell>
-                  <input type="checkbox" />
-                </TableCell>
-                <TableCell>Obrazek</TableCell>
-                <TableCell>Produkt</TableCell>
-                <TableCell>Popis</TableCell>
-                <TableCell>Cena</TableCell>
-                <TableCell>BestSeller</TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {products?.map((p) => (
-                <TableRow key={p.id}>
+    <>
+      <NewProductDialog
+        open={newProductDialogOpen}
+        onClose={() => setNewProductDialogOpen(false)}
+      />
+      <div>
+        <Button
+          className="flex flex-row gap-2"
+          onClick={() => setNewProductDialogOpen(true)}
+        >
+          <Plus />
+          Přídat produkt
+        </Button>
+        <Table>
+          {isLoading ? (
+            <TableRow>
+              <Loader2 className="animate-spin" />
+            </TableRow>
+          ) : (
+            <>
+              <TableHeader>
+                <TableRow>
                   <TableCell>
                     <input type="checkbox" />
                   </TableCell>
-                  <TableCell>
-                    <Image
-                      src={p.img === "" ? "https://placehold.co/500" : p.img}
-                      alt={p.name}
-                      height={50}
-                      width={50}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    {editProduct === p.id ? (
-                      <input
-                        value={formData.name}
-                        onChange={(e) => {
-                          setFormData((prev) => ({
-                            ...prev,
-                            name: e.target.value,
-                          }));
-                        }}
+                  <TableCell>Obrazek</TableCell>
+                  <TableCell>Produkt</TableCell>
+                  <TableCell>Popis</TableCell>
+                  <TableCell>Cena</TableCell>
+                  <TableCell>BestSeller</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {products?.map((p) => (
+                  <TableRow key={p.id}>
+                    <TableCell>
+                      <input type="checkbox" />
+                    </TableCell>
+                    <TableCell>
+                      <Image
+                        src={p.img === "" ? "https://placehold.co/500" : p.img}
+                        alt={p.name}
+                        height={50}
+                        width={50}
                       />
-                    ) : (
-                      p.name
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {editProduct === p.id ? (
-                      <textarea
-                        className="w-full"
-                        value={formData.desc}
-                        onChange={(e) => {
-                          setFormData((prev) => ({
-                            ...prev,
-                            desc: e.target.value,
-                          }));
-                        }}
-                      />
-                    ) : (
-                      p.desc
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {editProduct === p.id ? (
-                      <input
-                        type="number"
-                        value={formData.price}
-                        onChange={(e) => {
-                          setFormData((prev) => ({
-                            ...prev,
-                            price: Number(e.target.value),
-                          }));
-                        }}
-                      />
-                    ) : (
-                      p.price
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {editProduct === p.id ? (
-                      <input
-                        type="checkbox"
-                        checked={formData.featured}
-                        onChange={(e) => {
-                          setFormData((prev) => ({
-                            ...prev,
-                            featured: e.target.checked,
-                          }));
-                        }}
-                      />
-                    ) : p.featured ? (
-                      "Ano"
-                    ) : (
-                      "Ne"
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {editProduct === p.id ? (
-                      <>
-                        <X onClick={() => setEditProduct(null)} />
-                        <Save
-                          onClick={() => {
-                            updateProduct({ ...formData, id: p.id });
-                            setEditProduct(null);
+                    </TableCell>
+                    <TableCell>
+                      {editProduct === p.id ? (
+                        <input
+                          value={formData.name}
+                          onChange={(e) => {
+                            setFormData((prev) => ({
+                              ...prev,
+                              name: e.target.value,
+                            }));
                           }}
                         />
-                      </>
-                    ) : (
-                      <Edit2
-                        onClick={() => {
-                          setEditProduct(p.id);
-                          setFormData({ ...p });
-                        }}
-                        size={"1rem"}
-                      />
-                    )}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </>
-        )}
-      </Table>
-    </div>
+                      ) : (
+                        p.name
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {editProduct === p.id ? (
+                        <textarea
+                          className="w-full"
+                          value={formData.desc}
+                          onChange={(e) => {
+                            setFormData((prev) => ({
+                              ...prev,
+                              desc: e.target.value,
+                            }));
+                          }}
+                        />
+                      ) : (
+                        p.desc
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {editProduct === p.id ? (
+                        <input
+                          type="number"
+                          value={formData.price}
+                          onChange={(e) => {
+                            setFormData((prev) => ({
+                              ...prev,
+                              price: Number(e.target.value),
+                            }));
+                          }}
+                        />
+                      ) : (
+                        p.price
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {editProduct === p.id ? (
+                        <input
+                          type="checkbox"
+                          checked={formData.featured}
+                          onChange={(e) => {
+                            setFormData((prev) => ({
+                              ...prev,
+                              featured: e.target.checked,
+                            }));
+                          }}
+                        />
+                      ) : p.featured ? (
+                        "Ano"
+                      ) : (
+                        "Ne"
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {editProduct === p.id ? (
+                        <>
+                          <X onClick={() => setEditProduct(null)} />
+                          <Save
+                            onClick={() => {
+                              updateProduct({ ...formData, id: p.id });
+                              setEditProduct(null);
+                            }}
+                          />
+                        </>
+                      ) : (
+                        <Edit2
+                          onClick={() => {
+                            setEditProduct(p.id);
+                            setFormData({ ...p });
+                          }}
+                          size={"1rem"}
+                        />
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </>
+          )}
+        </Table>
+      </div>
+    </>
   );
 };
 
