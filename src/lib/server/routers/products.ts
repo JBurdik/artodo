@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { publicProcedure, router } from "../trpc";
+import { privateProcedure, publicProcedure, router } from "../trpc";
 import { z } from "zod";
 export const productsRouter = router({
   getProducts: publicProcedure.query(async () => {
@@ -18,5 +18,16 @@ export const productsRouter = router({
 
     return result
 
+  }),
+
+  createProduct: privateProcedure.input(z.object({
+    name: z.string(),
+    desc: z.string(),
+    price: z.number(),
+    stock: z.number(),
+    featured: z.boolean().optional()
+  })).mutation(async ({input})=>{
+    const result = await prisma.product.create({data: {...input, img: ''}})
+    return result
   })
 });
