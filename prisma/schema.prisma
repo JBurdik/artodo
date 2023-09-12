@@ -28,7 +28,7 @@ model Product {
 }
 
 model References {
-  id        String @id
+  id        String @id @default(uuid())
   fullName  String
   reference String
 }

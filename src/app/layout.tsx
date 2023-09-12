@@ -19,12 +19,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={caveat.className}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <RecoilRoot>
-<NextAuthProvider>
-<TrpcProvider>{children}</TrpcProvider>
-</NextAuthProvider>
-</RecoilRoot>
+            <NextAuthProvider>
+              <TrpcProvider>{children}</TrpcProvider>
+            </NextAuthProvider>
+          </RecoilRoot>
         </ThemeProvider>
       </body>
     </html>
