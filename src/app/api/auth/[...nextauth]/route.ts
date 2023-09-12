@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { DefaultSession, NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
+import GoogleProvider from "next-auth/providers/google";
 
 
 declare module "next-auth" {
@@ -21,7 +22,10 @@ export const authOptions: NextAuthOptions = {
     },
   },
   providers: [
-     
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!
+    })
   ],
 };
 

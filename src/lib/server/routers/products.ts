@@ -20,7 +20,7 @@ export const productsRouter = router({
 
   }),
 
-  createProduct: privateProcedure.input(z.object({
+  createProduct: publicProcedure.input(z.object({
     name: z.string(),
     desc: z.string(),
     price: z.number(),

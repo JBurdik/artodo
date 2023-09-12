@@ -3,6 +3,8 @@ import { adminTitleState } from "@/atoms/adminTitle";
 import { NewProductDialog } from "@/components/admin/products/dialogs/NewProductDialog";
 import { FsDialog } from "@/components/dialogs/FsDialog";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -10,6 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Textarea } from "@/components/ui/textarea";
 import { trpc } from "@/lib/trpc/client";
 import { Product } from "@prisma/client";
 import { Edit2, Loader2, Plus, Save, X } from "lucide-react";
@@ -85,9 +88,15 @@ const ProductsPage = () => {
               </TableHeader>
               <TableBody>
                 {products?.map((p) => (
-                  <TableRow key={p.id}>
+                  <TableRow
+                    key={p.id}
+                    onDoubleClick={() => {
+                      setEditProduct(p.id);
+                      setFormData(p);
+                    }}
+                  >
                     <TableCell>
-                      <input type="checkbox" />
+                      <Checkbox />
                     </TableCell>
                     <TableCell>
                       <Image
@@ -99,7 +108,7 @@ const ProductsPage = () => {
                     </TableCell>
                     <TableCell>
                       {editProduct === p.id ? (
-                        <input
+                        <Input
                           value={formData.name}
                           onChange={(e) => {
                             setFormData((prev) => ({
@@ -114,7 +123,7 @@ const ProductsPage = () => {
                     </TableCell>
                     <TableCell>
                       {editProduct === p.id ? (
-                        <textarea
+                        <Textarea
                           className="w-full"
                           value={formData.desc}
                           onChange={(e) => {
@@ -130,8 +139,9 @@ const ProductsPage = () => {
                     </TableCell>
                     <TableCell>
                       {editProduct === p.id ? (
-                        <input
+                        <Input
                           type="number"
+                          className="w-20"
                           value={formData.price}
                           onChange={(e) => {
                             setFormData((prev) => ({
@@ -146,13 +156,12 @@ const ProductsPage = () => {
                     </TableCell>
                     <TableCell>
                       {editProduct === p.id ? (
-                        <input
-                          type="checkbox"
+                        <Checkbox
                           checked={formData.featured}
-                          onChange={(e) => {
+                          onCheckedChange={(e: boolean) => {
                             setFormData((prev) => ({
                               ...prev,
-                              featured: e.target.checked,
+                              featured: e,
                             }));
                           }}
                         />
