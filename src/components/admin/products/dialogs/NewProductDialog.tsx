@@ -8,6 +8,7 @@ import { Product } from "@prisma/client";
 import React, { useEffect, useState } from "react";
 import { trpc } from "@/lib/trpc/client";
 import { Loader, Loader2 } from "lucide-react";
+import { Uploader } from "../Uploader";
 
 interface Props {
   open: boolean;
@@ -115,13 +116,12 @@ export const NewProductDialog = ({ open, onClose }: Props) => {
             }}
           />
         </div>
-        <Input
-          type="file"
-          multiple
-          onChange={(e) => {
-            if (e.target.files) handleUploadImages(e.target.files);
-            return;
-          }}
+        <Uploader
+          setImages={setImages}
+          images={images}
+          setIsUploading={setIsUploading}
+          isUploading={isUploading}
+          label="Nahrat obrazky"
         />
         <Button
           disabled={isUploading}

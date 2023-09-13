@@ -1,5 +1,6 @@
 "use client";
 import { adminTitleState } from "@/atoms/adminTitle";
+import { Uploader } from "@/components/admin/products/Uploader";
 import { NewProductDialog } from "@/components/admin/products/dialogs/NewProductDialog";
 import { FsDialog } from "@/components/dialogs/FsDialog";
 import { Button } from "@/components/ui/button";
@@ -51,6 +52,9 @@ const ProductsPage = () => {
   const [formData, setFormData] = useState<Product>(EMPTY_FORM_DATA);
   const [editProduct, setEditProduct] = useState<string | null>(null);
 
+  const [isUploading, setIsUploading] = useState<boolean>(false);
+  const [images, setImages] = useState<string[]>([]);
+
   const { data: products, isLoading } = trpc.products.getProducts.useQuery();
 
   const { mutate: updateProduct, data } =
@@ -100,6 +104,7 @@ const ProductsPage = () => {
                   <TableCell>Produkt</TableCell>
                   <TableCell>Popis</TableCell>
                   <TableCell>Cena</TableCell>
+                  <TableCell>Sklad</TableCell>
                   <TableCell>BestSeller</TableCell>
                   <TableCell></TableCell>
                 </TableRow>
@@ -117,16 +122,25 @@ const ProductsPage = () => {
                       <Checkbox />
                     </TableCell>
                     <TableCell>
-                      <Image
-                        src={
-                          p.img.split(", ")[0] === ""
-                            ? "https://placehold.co/500"
-                            : p.img.split(", ")[0]
-                        }
-                        alt={p.name}
-                        height={50}
-                        width={50}
-                      />
+                      {editProduct === p.id ? (
+                        <Uploader
+                          isUploading={isUploading}
+                          setImages={setImages}
+                          images={images}
+                          setIsUploading={setIsUploading}
+                        />
+                      ) : (
+                        <Image
+                          src={
+                            p.img.split(", ")[0] === ""
+                              ? "https://placehold.co/500"
+                              : p.img.split(", ")[0]
+                          }
+                          alt={p.name}
+                          height={50}
+                          width={50}
+                        />
+                      )}
                     </TableCell>
                     <TableCell>
                       {editProduct === p.id ? (
@@ -178,6 +192,23 @@ const ProductsPage = () => {
                     </TableCell>
                     <TableCell>
                       {editProduct === p.id ? (
+                        <Input
+                          type="number"
+                          className="w-20"
+                          value={formData.stock}
+                          onChange={(e) => {
+                            setFormData((prev) => ({
+                              ...prev,
+                              stock: Number(e.target.value),
+                            }));
+                          }}
+                        />
+                      ) : (
+                        p.stock
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {editProduct === p.id ? (
                         <Checkbox
                           checked={formData.featured}
                           onCheckedChange={(e: boolean) => {
@@ -199,7 +230,14 @@ const ProductsPage = () => {
                           <X onClick={() => setEditProduct(null)} />
                           <Save
                             onClick={() => {
-                              updateProduct({ ...formData, id: p.id });
+                              updateProduct({
+                                ...formData,
+                                id: p.id,
+                                img:
+                                  images.length > 0
+                                    ? images.join(", ")
+                                    : undefined,
+                              });
                               setEditProduct(null);
                             }}
                           />

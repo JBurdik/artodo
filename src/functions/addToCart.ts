@@ -9,7 +9,7 @@ export default function addToCart(setCart: SetterOrUpdater<ShoppingCartItemType[
         const productExist = old.findIndex(p=> p.id === product.id)
         if(productExist !== -1) {
             const newCart = old.map((p) => {
-                return product.id === p.id ? { ...p, quantity: p.quantity + 1 } : p;
+                return product.id === p.id && p.quantity < p.stock ? { ...p, quantity: p.quantity + 1 } : p;
               });
             return [
                 ...newCart
