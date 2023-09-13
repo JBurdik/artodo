@@ -24,10 +24,14 @@ interface Props {
 export const PriceCard = ({ style, currency, product }: Props) => {
   const setShoppingCart = useSetRecoilState(cartState);
   return (
-    <Card style={style}>
+    <Card style={style} className="h-full flex flex-col">
       <CardHeader>
         <Image
-          src={product.img === "" ? "https://placehold.co/500" : product.img}
+          src={
+            product.img.split(", ")[0] === ""
+              ? "https://placehold.co/500"
+              : product.img.split(", ")[0]
+          }
           alt={product.name}
           width={500}
           height={500}
@@ -41,7 +45,7 @@ export const PriceCard = ({ style, currency, product }: Props) => {
           {currency === "Kč" && currency}
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex-grow">
         <p>{product.desc}</p>
       </CardContent>
       <CardFooter>

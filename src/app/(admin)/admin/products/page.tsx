@@ -15,7 +15,16 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { trpc } from "@/lib/trpc/client";
 import { Product } from "@prisma/client";
-import { Edit2, Loader2, Plus, Save, X } from "lucide-react";
+import {
+  Delete,
+  Edit2,
+  Loader2,
+  Plus,
+  Save,
+  Trash,
+  Trash2,
+  X,
+} from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -33,21 +42,30 @@ const EMPTY_FORM_DATA: Product = {
 
 const ProductsPage = () => {
   const setTitle = useSetRecoilState(adminTitleState);
+
   const utils = trpc.useContext();
 
   const [newProductDialogOpen, setNewProductDialogOpen] =
     useState<boolean>(false);
 
   const [formData, setFormData] = useState<Product>(EMPTY_FORM_DATA);
+  const [editProduct, setEditProduct] = useState<string | null>(null);
+
   const { data: products, isLoading } = trpc.products.getProducts.useQuery();
-  const router = useRouter();
+
   const { mutate: updateProduct, data } =
     trpc.products.updateProduct.useMutation({
       onSuccess: (data) => {
         utils.products.invalidate();
       },
     });
-  const [editProduct, setEditProduct] = useState<string | null>(null);
+
+  const { mutate: deleteProduct } = trpc.products.deleteProduct.useMutation({
+    onSuccess: () => {
+      utils.products.invalidate();
+    },
+  });
+
   useEffect(() => {
     setTitle("Produkty");
   }, [setTitle]);
@@ -100,7 +118,11 @@ const ProductsPage = () => {
                     </TableCell>
                     <TableCell>
                       <Image
-                        src={p.img === "" ? "https://placehold.co/500" : p.img}
+                        src={
+                          p.img.split(", ")[0] === ""
+                            ? "https://placehold.co/500"
+                            : p.img.split(", ")[0]
+                        }
                         alt={p.name}
                         height={50}
                         width={50}
@@ -183,13 +205,25 @@ const ProductsPage = () => {
                           />
                         </>
                       ) : (
-                        <Edit2
-                          onClick={() => {
-                            setEditProduct(p.id);
-                            setFormData({ ...p });
-                          }}
-                          size={"1rem"}
-                        />
+                        <div className="flex flex-row items-center justify-center gap-2">
+                          <Button
+                            className="aspect-square px-0 py-0 bg-secondary hover:bg-primary/10"
+                            variant={"icon"}
+                            onClick={() => {
+                              setEditProduct(p.id);
+                              setFormData({ ...p });
+                            }}
+                          >
+                            <Edit2 className="text-blue-500" size={"1.3rem"} />
+                          </Button>
+                          <Button
+                            className="aspect-square px-0 py-0 bg-secondary hover:bg-primary/10"
+                            variant={"icon"}
+                            onClick={() => deleteProduct(p.id)}
+                          >
+                            <Trash className=" text-red-500" size={"1.3rem"} />
+                          </Button>
+                        </div>
                       )}
                     </TableCell>
                   </TableRow>

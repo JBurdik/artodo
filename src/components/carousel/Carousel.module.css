@@ -2,26 +2,36 @@
   overflow: hidden;
 }
 .emblaContainer {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  gap: "1rem";
 }
 .emblaSlide {
+  flex: 0 0 100%;
   width: 100%;
   padding: 0 0.5rem;
   min-width: 0;
 }
 
 @media (min-width: 650px) {
+  .emblaSlide {
+    flex: 0 0 50%;
+  }
   .emblaContainer {
     grid-template-columns: 1fr 1fr;
   }
 }
 @media (min-width: 750px) {
+  .emblaSlide {
+    flex: 0 0 33.33333%;
+  }
   .emblaContainer {
     grid-template-columns: 1fr 1fr 1fr;
   }
 }
 @media (min-width: 900px) {
+  .emblaSlide {
+    flex: 0 0 25%;
+  }
   .emblaContainer {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }

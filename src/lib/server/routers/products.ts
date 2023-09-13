@@ -23,11 +23,17 @@ export const productsRouter = router({
   createProduct: publicProcedure.input(z.object({
     name: z.string(),
     desc: z.string(),
+    img: z.string().optional(),
     price: z.number(),
     stock: z.number(),
     featured: z.boolean().optional()
   })).mutation(async ({input})=>{
-    const result = await prisma.product.create({data: {...input, img: ''}})
+    const result = await prisma.product.create({data: {...input, img: input.img ?? ''}})
     return result
+  }),
+
+  deleteProduct: publicProcedure.input(z.string()).mutation(async( { input }) => {
+      const result = await prisma.product.delete({where: {id: input}})
+      return result
   })
 });
