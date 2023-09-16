@@ -13,10 +13,9 @@ import { trpc } from "@/lib/trpc/client";
 import { Product } from "@prisma/client";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { Loader2, Trash } from "lucide-react";
-import Image from "next/image";
+import { CldImage } from "next-cloudinary";
 import { useEffect, useState } from "react";
 import { Uploader } from "../Uploader";
-import { CldImage } from "next-cloudinary";
 
 interface Props {
   open: boolean;
@@ -29,6 +28,7 @@ const EMPTY_FORMDATA: Product = {
   name: "",
   desc: "",
   img: "",
+  slug: "",
   price: 0,
   stock: 0,
   featured: false,

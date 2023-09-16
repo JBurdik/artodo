@@ -34,6 +34,7 @@ export const productsRouter = router({
     name: z.string(),
     desc: z.string(),
     img: z.string().optional(),
+    slug: z.string(),
     price: z.number(),
     stock: z.number(),
     featured: z.boolean().optional()

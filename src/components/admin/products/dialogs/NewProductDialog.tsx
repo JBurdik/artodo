@@ -23,6 +23,7 @@ const EMPTY_FORMDATA: Product = {
   name: "",
   desc: "",
   img: "",
+  slug: "",
   price: 0,
   stock: 0,
   featured: false,
@@ -45,6 +46,15 @@ export const NewProductDialog = ({ open, onClose }: Props) => {
       <div className="flex flex-col gap-4 max-w-lg mx-auto">
         <div>
           <Label>Jméno produktu:</Label>
+          <Input
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, name: e.target.value }))
+            }
+          />
+        </div>
+
+        <div>
+          <Label>{`Odkaz (slug)`}:</Label>
           <Input
             onChange={(e) =>
               setFormData((prev) => ({ ...prev, name: e.target.value }))
