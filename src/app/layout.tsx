@@ -1,11 +1,6 @@
-"use client";
-import { ThemeProvider } from "@/components/theme-provider";
-import "./globals.css";
 import { Montserrat } from "next/font/google";
-import { Nav } from "@/components/shared/Nav";
-import { RecoilRoot } from "recoil";
-import NextAuthProvider from "@/lib/auth/Provider";
-import TrpcProvider from "@/lib/trpc/Provider";
+import "./globals.css";
+import Providers from "./providers";
 
 const caveat = Montserrat({
   subsets: ["latin-ext"],
@@ -19,13 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={caveat.className}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-          <RecoilRoot>
-            <NextAuthProvider>
-              <TrpcProvider>{children}</TrpcProvider>
-            </NextAuthProvider>
-          </RecoilRoot>
-        </ThemeProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { Image, Loader2, Upload } from "lucide-react";
+import { Image as ImageIcon, Loader2, Upload } from "lucide-react";
 import React, { useRef } from "react";
 
 interface UploaderProps {
@@ -62,7 +62,7 @@ export const Uploader = ({
           <Loader2 className="animate-spin" />
         ) : images.length > 0 ? (
           <>
-            <Image />
+            <ImageIcon />
             {images.length}
           </>
         ) : (
