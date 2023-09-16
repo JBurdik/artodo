@@ -6,6 +6,14 @@ export const productsRouter = router({
     return prisma.product.findMany()
   }),
 
+  getProductBySlug: publicProcedure.input(z.string()).query(async ({input})=>{
+    return prisma.product.findFirst({
+      where: {
+        slug: input
+      }
+    })
+  }),
+
   updateProduct: publicProcedure.input(z.object({
     id: z.string(),
     name: z.string().optional(),

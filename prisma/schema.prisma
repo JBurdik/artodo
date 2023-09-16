@@ -69,6 +69,7 @@ model Product {
   desc     String
   price    Int
   stock    Int
+  slug     String  @default("")
   featured Boolean @default(false)
 }
 

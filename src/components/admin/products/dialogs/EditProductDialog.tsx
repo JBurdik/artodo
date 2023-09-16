@@ -71,7 +71,7 @@ export const EditProductDialog = ({ open, onClose, product }: Props) => {
   };
   return (
     <FsDialog open={open} onClose={onClose} title="Úprava produktu">
-      <div className="flex flex-col items-center justify-center h-full gap-4 mx-auto mt-5 mb-28">
+      <div className="flex flex-col items-center justify-start h-full gap-4 mx-auto mt-2 mb-28">
         <div className="formWrapper flex flex-col max-w-lg gap-2">
           <div className="w-full">
             <Label>Jméno produktu:</Label>

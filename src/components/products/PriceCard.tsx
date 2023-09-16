@@ -7,13 +7,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
 import { useSetRecoilState } from "recoil";
 import { cartState } from "@/atoms/cart";
 import { ShoppingCartItemType } from "@/models/shoppingCart";
 import Image from "next/image";
 import { Product } from "@prisma/client";
 import addToCart from "@/functions/addToCart";
+import { CldImage } from "next-cloudinary";
+import Link from "next/link";
 
 interface Props {
   product: Product;
@@ -26,12 +28,8 @@ export const PriceCard = ({ style, currency, product }: Props) => {
   return (
     <Card style={style} className="h-full flex flex-col">
       <CardHeader>
-        <Image
-          src={
-            product.img.split(", ")[0] === ""
-              ? "https://placehold.co/500"
-              : product.img.split(", ")[0]
-          }
+        <CldImage
+          src={product.img.split(", ")[0]}
           alt={product.name}
           width={500}
           height={500}
@@ -48,10 +46,16 @@ export const PriceCard = ({ style, currency, product }: Props) => {
       <CardContent className="flex-grow">
         <p>{product.desc}</p>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="flex flex-row items-center justify-between gap-3">
         <Button onClick={() => addToCart(setShoppingCart, product)}>
           Přidat do košíku
         </Button>
+        <Link
+          className={buttonVariants({ variant: "secondary" })}
+          href={`/products/${product.slug}`}
+        >
+          Detail
+        </Link>
       </CardFooter>
     </Card>
   );

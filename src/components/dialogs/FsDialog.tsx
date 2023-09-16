@@ -20,7 +20,7 @@ export const FsDialog = ({ open, title, children, onClose }: FsDialogProps) => {
           <X />
         </Button>
       </div>
-      <div className="p-6 absolute top-20 inset-0 overflow-y-auto">
+      <div className="p-6 absolute top-10 inset-0 overflow-y-auto">
         {children}
       </div>
     </div>

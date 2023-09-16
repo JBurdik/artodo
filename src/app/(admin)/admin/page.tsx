@@ -14,7 +14,6 @@ const AdminPage = () => {
   return (
     <div>
       AdminPage
-      <ModeToggle />
       <Link
         href={"/api/auth/signin"}
         className={buttonVariants({ variant: "outline" })}

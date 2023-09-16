@@ -1,4 +1,4 @@
-import { X } from "lucide-react";
+import { ShoppingCart, X } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -20,14 +20,22 @@ export const ShoppingCartSideBar = ({ open, setOpen }: Props) => {
   }, [shoppingCart]);
   if (open)
     return (
-      <div className="fixed flex flex-col top-0 bottom-0 right-0 z-[999] bg-foreground h-screen w-full md:w-1/2 lg:w-1/3 text-background">
-        <div className="flex flex-row justify-end items-center">
-          ShoppingCart
-          <Button variant={"icon"} onClick={() => setOpen(false)}>
+      <div className="fixed flex flex-col top-0 bottom-0 right-0 z-[999] bg-background h-screen w-full md:w-1/2 lg:w-1/3 text-primary">
+        <div className="flex flex-row justify-between items-center p-4 mb-4 border-muted border-b">
+          <span className="flex items-center justify-center gap-3">
+            <ShoppingCart />
+            Váš košík
+          </span>
+          <Button
+            variant={"icon"}
+            size={"icon"}
+            className="bg-transparent"
+            onClick={() => setOpen(false)}
+          >
             <X />
           </Button>
         </div>
-        <div className="flex flex-col gap-4 overflow-y-auto">
+        <div className="flex flex-col gap-4 overflow-y-auto pt-4">
           {shoppingCart.map((i, idx) => (
             <ShoppingCartItem key={`cartItem_${idx}`} {...i} />
           ))}

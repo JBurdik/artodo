@@ -7,5 +7,6 @@ export const productSchema = z.object({
   desc: z.string(),
   price: z.number().int(),
   stock: z.number().int(),
+  slug: z.string(),
   featured: z.boolean(),
 })
