@@ -1,5 +1,6 @@
 "use client";
 import { adminTitleState } from "@/atoms/adminTitle";
+import { ModeToggle } from "@/components/theme-toggle-button";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import React, { useEffect } from "react";
@@ -13,6 +14,7 @@ const AdminPage = () => {
   return (
     <div>
       AdminPage
+      <ModeToggle />
       <Link
         href={"/api/auth/signin"}
         className={buttonVariants({ variant: "outline" })}

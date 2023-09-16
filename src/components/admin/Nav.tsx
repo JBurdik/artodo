@@ -14,7 +14,7 @@ export const AdminSidebar = () => {
   return (
     <>
       {/* MOBILE NAVIGATION */}
-      <div className=" fixed bottom-6 inset-x-3 md:hidden bg-primary text-secondary rounded-md shadow-primary shadow-md py-2">
+      <div className=" fixed bottom-4 inset-x-3 md:hidden bg-primary text-secondary rounded-md shadow-primary shadow-md py-2">
         <nav className="flex flex-row justify-center gap-4 h-full">
           {adminNav.map((link) => (
             <Link
@@ -54,8 +54,8 @@ export const AdminSidebar = () => {
       </div>
 
       {/* DESKTOP NAVIGATION */}
-      <div className="hidden md:block bg-primary h-screen text-secondary w-60 fixed top-0 bottom-0 left-0">
-        <div className="flex flex-row items-center justify-center gap-3 py-5 border-b border-secondary mb-4">
+      <div className="hidden md:block bg-secondary-muted h-screen w-60 fixed top-0 bottom-0 left-0">
+        <div className="flex flex-row items-center justify-center gap-3 py-5 border-b border-muted-foreground mb-4">
           <Image src={"/logo_white.svg"} alt="logo" width={100} height={200} />
           <span className="uppercase text-xl font-bold tracking-widest">
             Admin
@@ -67,8 +67,8 @@ export const AdminSidebar = () => {
               key={`adminNav_${link.name}`}
               href={link.link}
               className={cn(
-                pathname === link.link && "text-primary bg-secondary",
-                "flex flex-row items-center justify-start gap-5 mx-3 p-2 rounded-md hover:bg-secondary hover:text-primary transition-colors"
+                pathname === link.link && "text-secondary bg-primary",
+                "flex flex-row items-center justify-start gap-5 mx-3 p-2 rounded-md hover:bg-primary hover:text-secondary transition-colors"
               )}
             >
               {link.icon ? <link.icon /> : <ShieldQuestion />}
