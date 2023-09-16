@@ -32,6 +32,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
+import { CldImage } from "next-cloudinary";
 
 const EMPTY_FORM_DATA: Product = {
   id: "",
@@ -143,12 +144,8 @@ const ProductsPage = () => {
                           setIsUploading={setIsUploading}
                         />
                       ) : (
-                        <Image
-                          src={
-                            p.img.split(", ")[0] === ""
-                              ? "https://placehold.co/500"
-                              : p.img.split(", ")[0]
-                          }
+                        <CldImage
+                          src={p.img.split(", ")[0]}
                           alt={p.name}
                           height={50}
                           width={50}

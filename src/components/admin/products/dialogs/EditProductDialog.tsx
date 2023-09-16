@@ -1,20 +1,6 @@
 import { FsDialog } from "@/components/dialogs/FsDialog";
-import React, { useEffect, useState } from "react";
-import { Uploader } from "../Uploader";
-import { Product } from "@prisma/client";
-import { trpc } from "@/lib/trpc/client";
-import { Label } from "@radix-ui/react-dropdown-menu";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Delete, Loader2, Star, Trash } from "lucide-react";
-import { Checkbox } from "@radix-ui/react-checkbox";
-import Image from "next/image";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -22,6 +8,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { trpc } from "@/lib/trpc/client";
+import { Product } from "@prisma/client";
+import { Label } from "@radix-ui/react-dropdown-menu";
+import { Loader2, Trash } from "lucide-react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { Uploader } from "../Uploader";
+import { CldImage } from "next-cloudinary";
 
 interface Props {
   open: boolean;
@@ -49,7 +44,8 @@ export const EditProductDialog = ({ open, onClose, product }: Props) => {
   const utils = trpc.useContext();
   const { mutate: updateProduct } = trpc.products.updateProduct.useMutation({
     onSuccess: (data) => {
-      console.log(data);
+      console.log(data.img);
+      utils.products.getProducts.invalidate();
       setImages([]);
       onClose();
     },
@@ -61,7 +57,16 @@ export const EditProductDialog = ({ open, onClose, product }: Props) => {
   const handleSave = () => {
     updateProduct({
       ...formData,
-      img: formImages.concat(images).join(", "),
+      img: formImages.join(", "),
+    });
+    setImages([]);
+  };
+  const handleDeleteCldImage = async (publicId: string) => {
+    const res = await fetch("/api/deleteCldImage", {
+      method: "DELETE",
+      body: JSON.stringify({
+        publicId,
+      }),
     });
   };
   return (
@@ -150,14 +155,15 @@ export const EditProductDialog = ({ open, onClose, product }: Props) => {
                 <Button
                   size={"icon"}
                   variant={"destructive"}
-                  onClick={() =>
-                    setFormImages((prev) => prev.filter((p) => p !== img))
-                  }
+                  onClick={() => {
+                    handleDeleteCldImage(img);
+                    setFormImages((prev) => prev.filter((p) => p !== img));
+                  }}
                 >
                   <Trash size={"1.5rem"} />
                 </Button>
               </div>
-              <Image
+              <CldImage
                 key={img}
                 src={img}
                 alt={formData.name}
@@ -170,7 +176,9 @@ export const EditProductDialog = ({ open, onClose, product }: Props) => {
         </div>
       </div>
       <div className="fixed bottom-0 bg-background px-6 py-4 inset-x-0 shadow-lg shadow-primary flex justify-end gap-6">
-        <Button variant={"destructive"}>Zrušit</Button>
+        <Button variant={"destructive"} onClick={() => onClose()}>
+          Zrušit
+        </Button>
         <Button
           disabled={isUploading}
           onClick={() => handleSave()}

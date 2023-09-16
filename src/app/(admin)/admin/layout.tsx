@@ -16,11 +16,11 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <AdminSidebar />
-      <div className="bg-gray-300 h-screen ml-60 p-5">
+      <div className="bg-gray-300 h-screen md:ml-60 p-5">
         <div className="bg-white p-4 rounded-md mb-4 shadow-md shadow-foreground">
           {adminTitle}
         </div>
-        <div className="bg-secondary p-4 rounded-md shadow-md shadow-primary  max-h-max">
+        <div className="bg-secondary p-4 rounded-md shadow-md shadow-primary max-h-max">
           {children}
         </div>
       </div>

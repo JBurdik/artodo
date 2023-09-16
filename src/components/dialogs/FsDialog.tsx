@@ -18,8 +18,9 @@ export const FsDialog = ({ open, title, children, onClose }: FsDialogProps) => {
         <H1>{title}</H1>
         <Button
           onClick={onClose}
-          variant={"icon"}
-          className="bg-background text-primary absolute top-4 right-4"
+          variant={"ghost"}
+          size={"icon"}
+          className="absolute top-4 right-4"
         >
           <X />
         </Button>

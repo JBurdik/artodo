@@ -29,6 +29,7 @@ export const Uploader = ({
   const inputRef = useRef<HTMLInputElement | null>(null);
   const handleUploadImages = async (data: FileList) => {
     let i = 0;
+    let images: string[] = [];
     setIsUploading(true);
     const files = Array.from(data);
     files.forEach(async (file) => {
@@ -42,10 +43,13 @@ export const Uploader = ({
           body: fd,
         }
       ).then((r) => r.json());
-      console.log(result);
-      setImages((prev) => [...prev, result.secure_url]);
+      images.push(result.public_id);
       i++;
-      if (files.length === i) setIsUploading(false);
+      if (files.length === i) {
+        setIsUploading(false);
+        console.log(images);
+        setImages(images);
+      }
     });
   };
   return (
@@ -60,11 +64,6 @@ export const Uploader = ({
       >
         {isUploading ? (
           <Loader2 className="animate-spin" />
-        ) : images.length > 0 ? (
-          <>
-            <ImageIcon />
-            {images.length}
-          </>
         ) : (
           <>
             <Upload />
