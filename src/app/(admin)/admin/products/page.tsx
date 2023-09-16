@@ -40,6 +40,7 @@ const EMPTY_FORM_DATA: Product = {
   featured: false,
   img: "",
   name: "",
+  slug: "",
   price: 0,
   stock: 0,
 };
