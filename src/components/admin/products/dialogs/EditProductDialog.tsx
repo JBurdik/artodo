@@ -1,23 +1,22 @@
 import { FsDialog } from "@/components/dialogs/FsDialog";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Product } from "@prisma/client";
-import React, { useEffect, useState } from "react";
-import { trpc } from "@/lib/trpc/client";
-import { Loader, Loader2 } from "lucide-react";
+import React, { useState } from "react";
 import { Uploader } from "../Uploader";
+import { Product } from "@prisma/client";
+import { trpc } from "@/lib/trpc/client";
+import { Label } from "@radix-ui/react-dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
+import { Checkbox } from "@radix-ui/react-checkbox";
+import Image from "next/image";
 
 interface Props {
   open: boolean;
   onClose: () => void;
+  product: Product;
 }
-type UploadResult = {
-  public_id: string;
-  secure_url: string;
-};
+
 const EMPTY_FORMDATA: Product = {
   id: "",
   name: "",
@@ -27,25 +26,19 @@ const EMPTY_FORMDATA: Product = {
   stock: 0,
   featured: false,
 };
-export const NewProductDialog = ({ open, onClose }: Props) => {
-  const [formData, setFormData] = useState<Product>(EMPTY_FORMDATA);
+
+export const EditProductDialog = ({ open, onClose, product }: Props) => {
+  const [formData, setFormData] = useState<Product>(product);
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [images, setImages] = useState<string[]>([]);
   const utils = trpc.useContext();
-
-  const { mutate: createProduct } = trpc.products.createProduct.useMutation({
-    onSuccess: () => {
-      onClose();
-      utils.products.invalidate();
-      setImages([]);
-    },
-  });
   return (
-    <FsDialog open={open} title="Přidat produkt" onClose={onClose}>
-      <div className="flex flex-col gap-4 max-w-lg mx-auto">
+    <FsDialog open={open} onClose={onClose} title="Úprava produktu">
+      <div className="flex flex-col items-center justify-center inset-0 overflow-y-auto gap-4 max-w-lg mx-auto">
         <div>
           <Label>Jméno produktu:</Label>
           <Input
+            value={formData.name}
             onChange={(e) =>
               setFormData((prev) => ({ ...prev, name: e.target.value }))
             }
@@ -55,6 +48,7 @@ export const NewProductDialog = ({ open, onClose }: Props) => {
         <div>
           <Label>Popis produktu:</Label>
           <Textarea
+            value={formData.desc}
             onChange={(e) =>
               setFormData((prev) => ({ ...prev, desc: e.target.value }))
             }
@@ -64,6 +58,7 @@ export const NewProductDialog = ({ open, onClose }: Props) => {
           <div>
             <Label>Cena:</Label>
             <Input
+              value={formData.price}
               type="number"
               onChange={(e) =>
                 setFormData((prev) => ({
@@ -76,6 +71,7 @@ export const NewProductDialog = ({ open, onClose }: Props) => {
           <div>
             <Label>Skladová zásoba:</Label>
             <Input
+              value={formData.stock}
               type="number"
               onChange={(e) =>
                 setFormData((prev) => ({
@@ -102,10 +98,18 @@ export const NewProductDialog = ({ open, onClose }: Props) => {
           isUploading={isUploading}
           label="Nahrat obrazky"
         />
-        <Button
-          disabled={isUploading}
-          onClick={() => createProduct({ ...formData, img: images.join(", ") })}
-        >
+        <div className="flex flex-row">
+          {formData.img.split(", ").map((img) => (
+            <Image
+              key={img}
+              src={img}
+              alt={formData.name}
+              height={200}
+              width={200}
+            />
+          ))}
+        </div>
+        <Button disabled={isUploading} onClick={() => true}>
           {isUploading ? (
             <>
               <Loader2 className="animate-spin" /> Načítání

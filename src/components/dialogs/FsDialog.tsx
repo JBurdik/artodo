@@ -14,7 +14,7 @@ export const FsDialog = ({ open, title, children, onClose }: FsDialogProps) => {
   if (!open) return null;
   return (
     <div className="fixed inset-0 bg-background">
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center h-20 bg-white fixed top-0 w-full z-50">
         <H1>{title}</H1>
         <Button
           onClick={onClose}
@@ -24,7 +24,7 @@ export const FsDialog = ({ open, title, children, onClose }: FsDialogProps) => {
           <X />
         </Button>
       </div>
-      <div className="p-6">{children}</div>
+      <div className="p-6 absolute top-20 inset-x-0">{children}</div>
     </div>
   );
 };

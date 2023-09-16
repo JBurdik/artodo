@@ -1,6 +1,7 @@
 "use client";
 import { adminTitleState } from "@/atoms/adminTitle";
 import { Uploader } from "@/components/admin/products/Uploader";
+import { EditProductDialog } from "@/components/admin/products/dialogs/EditProductDialog";
 import { NewProductDialog } from "@/components/admin/products/dialogs/NewProductDialog";
 import { FsDialog } from "@/components/dialogs/FsDialog";
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,7 @@ import { Product } from "@prisma/client";
 import {
   Delete,
   Edit2,
+  FileEdit,
   Loader2,
   Plus,
   Save,
@@ -52,6 +54,10 @@ const ProductsPage = () => {
   const [formData, setFormData] = useState<Product>(EMPTY_FORM_DATA);
   const [editProduct, setEditProduct] = useState<string | null>(null);
 
+  const [editProductDialog, setEditProductDialog] = useState<Product | null>(
+    null
+  );
+
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [images, setImages] = useState<string[]>([]);
 
@@ -76,6 +82,13 @@ const ProductsPage = () => {
 
   return (
     <>
+      {editProductDialog && (
+        <EditProductDialog
+          open={!!editProductDialog}
+          product={editProductDialog}
+          onClose={() => setEditProductDialog(null)}
+        />
+      )}
       <NewProductDialog
         open={newProductDialogOpen}
         onClose={() => setNewProductDialogOpen(false)}
@@ -253,6 +266,19 @@ const ProductsPage = () => {
                             }}
                           >
                             <Edit2 className="text-blue-500" size={"1.3rem"} />
+                          </Button>
+                          <Button
+                            className="aspect-square px-0 py-0 bg-secondary hover:bg-primary/10"
+                            variant={"icon"}
+                            onClick={() => {
+                              setEditProductDialog(p);
+                              setFormData({ ...p });
+                            }}
+                          >
+                            <FileEdit
+                              className="text-blue-500"
+                              size={"1.3rem"}
+                            />
                           </Button>
                           <Button
                             className="aspect-square px-0 py-0 bg-secondary hover:bg-primary/10"
